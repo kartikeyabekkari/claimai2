@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClaimAI — Small Claims Lawyer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--ink:#0D0C0A;--parchment:#FAF7F2;--cream:#F2EDE4;--gold:#C9A84C;--gold-light:#E8D08A;--gold-pale:#F7F0DC;--muted:#7A7468;--border:#E0D8CC;--border-dark:#C5BAA8;--surface:#FFFFFF;--r:4px;--r-lg:12px}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--parchment);color:var(--ink);min-height:100vh;overflow-x:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(250,247,242,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:10px}
+    .nav-logo-icon{width:28px;height:28px;background:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px}
+    .nav-pill{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--cream);border:1px solid var(--border);border-radius:20px;padding:4px 14px}
+    #section-hero{position:relative;padding:160px 48px 100px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden}
+    .hero-bg-text{position:absolute;font-family:'Cormorant Garamond',serif;font-size:clamp(180px,30vw,340px);font-weight:700;color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.1);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;user-select:none;pointer-events:none;line-height:1}
+    .hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+    .hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:40px;height:1px;background:var(--gold-light)}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,8vw,88px);font-weight:600;line-height:1.05;color:var(--ink);margin-bottom:24px;position:relative;z-index:1}
+    .hero-title em{font-style:italic;color:var(--gold)}
+    .hero-sub{font-size:16px;font-weight:300;color:var(--muted);max-width:520px;line-height:1.75;margin-bottom:48px;position:relative;z-index:1}
+    .hero-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:64px;position:relative;z-index:1}
+    .btn-gold{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--gold-light);border:none;border-radius:var(--r);padding:16px 36px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.04em;transition:all .25s}
+    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(13,12,10,.25)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:var(--r);padding:16px 28px;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s}
+    .btn-ghost:hover{border-color:var(--border-dark);color:var(--ink);background:var(--cream)}
+    .hero-stats{display:flex;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;background:var(--surface);position:relative;z-index:1}
+    .stat{padding:20px 36px;text-align:center;border-right:1px solid var(--border)}
+    .stat:last-child{border-right:none}
+    .stat-num{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--ink);line-height:1}
+    .stat-label{font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.05em}
+    .features-section{padding:100px 48px;background:var(--ink);position:relative;overflow:hidden}
+    .features-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(201,168,76,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(201,168,76,.05) 0%,transparent 50%)}
+    .features-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+    .section-label{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .features-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:600;color:#FAF7F2;margin-bottom:60px;line-height:1.15}
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+    .feature-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:36px 32px;transition:background .3s}
+    .feature-card:hover{background:rgba(201,168,76,.07)}
+    .feature-icon{font-size:24px;margin-bottom:16px;display:block}
+    .feature-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#FAF7F2;margin-bottom:10px}
+    .feature-desc{font-size:13px;color:rgba(250,247,242,.5);line-height:1.7}
+    .pricing-section{padding:100px 48px;background:var(--cream)}
+    .pricing-inner{max-width:900px;margin:0 auto}
+    .section-header{text-align:center;margin-bottom:60px}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:600;color:var(--ink);line-height:1.15}
+    .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .pricing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:36px 28px;position:relative;transition:transform .2s,box-shadow .2s}
+    .pricing-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(13,12,10,.08)}
+    .pricing-card.featured{background:var(--ink);border-color:var(--ink)}
+    .pricing-card.featured .pricing-price,.pricing-card.featured .pricing-name,.pricing-card.featured .pricing-per{color:#FAF7F2}
+    .pricing-card.featured .pricing-features{color:rgba(250,247,242,.6)}
+    .featured-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--ink);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px}
+    .pricing-name{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+    .pricing-price{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:600;color:var(--ink);line-height:1}
+    .pricing-per{font-size:13px;color:var(--muted);margin-bottom:24px}
+    .pricing-features{font-size:13px;color:var(--muted);line-height:2.2}
+    .pricing-features span{display:block}
+    .pricing-features span::before{content:'→  ';color:var(--gold);font-weight:500}
+    #section-app{min-height:100vh;padding:100px 24px 60px;display:none}
+    #section-app.visible{display:block}
+    .app-container{max-width:680px;margin:0 auto}
+    .progress-bar{display:flex;align-items:center;justify-content:center;margin-bottom:48px}
+    .prog-step{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--border-dark);transition:color .3s}
+    .prog-step.active{color:var(--ink)}
+    .prog-step.done{color:var(--gold)}
+    .prog-num{width:28px;height:28px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:11px;font-family:'Cormorant Garamond',serif;font-weight:700;transition:all .3s}
+    .prog-step.active .prog-num{background:var(--ink);color:var(--gold-light);border-color:var(--ink)}
+    .prog-step.done .prog-num{background:var(--gold-pale);color:var(--gold);border-color:var(--gold)}
+    .prog-line{width:60px;height:1px;background:var(--border);margin:0 8px}
+    .form-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 4px 24px rgba(13,12,10,.06);margin-bottom:20px}
+    .form-card-header{padding:24px 32px 20px;border-bottom:1px solid var(--border)}
+    .form-card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink)}
+    .form-card-sub{font-size:13px;color:var(--muted);margin-top:4px}
+    .form-card-body{padding:28px 32px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .form-group{margin-bottom:20px}
+    .form-group label{display:block;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+    select,input[type=number],textarea{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:var(--r);font-size:14px;font-family:'DM Sans',sans-serif;background:var(--parchment);color:var(--ink);transition:all .2s;outline:none;appearance:none}
+    select:focus,input:focus,textarea:focus{border-color:var(--ink);background:var(--surface);box-shadow:0 0 0 3px rgba(13,12,10,.06)}
+    textarea{min-height:120px;resize:vertical;line-height:1.65}
+    .evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+    .evidence-label{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink);cursor:pointer;padding:10px 14px;border:1px solid var(--border);border-radius:var(--r);background:var(--parchment);transition:all .15s}
+    .evidence-label:hover{border-color:var(--border-dark);background:var(--cream)}
+    .evidence-label input{accent-color:var(--ink)}
+    .btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--gold-light);border:none;border-radius:var(--r);padding:14px 32px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.03em;transition:all .2s}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(13,12,10,.2)}
+    .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:var(--r);padding:14px 24px;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s}
+    .btn-secondary:hover{border-color:var(--border-dark);color:var(--ink);background:var(--cream)}
+    .form-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .result-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 4px 24px rgba(13,12,10,.06);margin-bottom:20px}
+    .strength-hero{background:var(--ink);padding:36px 40px;display:flex;align-items:center;gap:32px}
+    .strength-big{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:700;line-height:1;color:var(--gold)}
+    .strength-verdict{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:#FAF7F2;margin-bottom:8px}
+    .strength-sub{font-size:13px;color:rgba(250,247,242,.5)}
+    .strength-track{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-top:16px}
+    .strength-fill{height:100%;border-radius:2px;transition:width 1s cubic-bezier(.4,0,.2,1)}
+    .result-body-section{padding:32px 40px;border-top:1px solid var(--border)}
+    .result-section-label{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .result-text{font-size:14px;line-height:1.85;color:var(--ink);white-space:pre-wrap}
+    .tabs-header{display:flex;border-bottom:1px solid var(--border);padding:0 40px;background:var(--parchment)}
+    .tab-btn{padding:18px 0;margin-right:32px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .2s;letter-spacing:.02em}
+    .tab-btn.active{color:var(--ink);border-bottom-color:var(--ink)}
+    .tab-content{padding:36px 40px}
+    .copy-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);background:var(--cream);border:1px solid var(--border);border-radius:var(--r);padding:6px 14px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;float:right;margin-top:-4px}
+    .copy-btn:hover{border-color:var(--border-dark);color:var(--ink)}
+    .loading-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 40px;text-align:center}
+    .loading-seal{width:56px;height:56px;border:2px solid var(--border);border-top-color:var(--ink);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:24px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink);margin-bottom:8px}
+    .loading-sub{font-size:13px;color:var(--muted)}
+    .disclaimer{font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding:20px 32px;text-align:center;background:var(--cream);line-height:1.6}
+    footer{background:var(--ink);color:rgba(250,247,242,.4);text-align:center;padding:32px;font-size:12px;letter-spacing:.04em}
+    footer span{color:var(--gold)}
+    .hidden{display:none!important}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .fade-up{animation:fadeUp .5s ease forwards}
+    .fade-up-2{animation:fadeUp .5s .1s ease both}
+    .fade-up-3{animation:fadeUp .5s .2s ease both}
+    .fade-up-4{animation:fadeUp .5s .3s ease both}
+    @media(max-width:700px){
+      nav{padding:0 20px}
+      #section-hero{padding:120px 20px 80px}
+      .features-section,.pricing-section{padding:60px 20px}
+      .features-grid,.pricing-grid{grid-template-columns:1fr}
+      .form-row,.evidence-grid{grid-template-columns:1fr}
+      .hero-stats{flex-direction:column}
+      .stat{border-right:none;border-bottom:1px solid var(--border)}
+      .stat:last-child{border-bottom:none}
+      .strength-hero{flex-direction:column;gap:16px}
+      .result-body-section,.tab-content{padding:24px 20px}
+      .tabs-header{padding:0 20px}
+      #section-app{padding:90px 16px 40px}
+      .form-card-body{padding:20px}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><div class="nav-logo-icon">⚖</div>ClaimAI</div>
+  <div class="nav-pill">Document Prep · Not Legal Advice</div>
+</nav>
+
+<div id="section-hero">
+  <div class="hero-bg-text">JUSTICE</div>
+  <div class="hero-eyebrow fade-up">Small Claims · All 50 States</div>
+  <h1 class="hero-title fade-up-2">Fight Back.<br/><em>Win Your Case.</em></h1>
+  <p class="hero-sub fade-up-3">AI-powered case analysis, demand letters, and court filing guides — in minutes, not months. For a fraction of what a lawyer costs.</p>
+  <div class="hero-cta fade-up-4">
+    <button class="btn-gold" onclick="showApp()">Analyze my case <span style="font-size:18px">→</span></button>
+    <button class="btn-ghost" onclick="document.querySelector('.features-section').scrollIntoView({behavior:'smooth'})">See what's included</button>
+  </div>
+  <div class="hero-stats fade-up-4">
+    <div class="stat"><div class="stat-num">40M+</div><div class="stat-label">Cases filed yearly</div></div>
+    <div class="stat"><div class="stat-num">$300/hr</div><div class="stat-label">Average lawyer cost</div></div>
+    <div class="stat"><div class="stat-num">~$29</div><div class="stat-label">Cost with ClaimAI</div></div>
+    <div class="stat"><div class="stat-num">5 min</div><div class="stat-label">To your demand letter</div></div>
+  </div>
+</div>
+
+<div class="features-section">
+  <div class="features-inner">
+    <div class="section-label">What you get</div>
+    <h2 class="features-title">Everything you need<br/>to walk into court ready.</h2>
+    <div class="features-grid">
+      <div class="feature-card"><span class="feature-icon">⚡</span><div class="feature-name">Case Strength Score</div><div class="feature-desc">Know exactly where you stand before spending a dollar. AI rates your case 1–100 with a full legal breakdown.</div></div>
+      <div class="feature-card"><span class="feature-icon">📋</span><div class="feature-name">Evidence Checklist</div><div class="feature-desc">A custom list of what you have and what you still need — tailored to your specific case and state.</div></div>
+      <div class="feature-card"><span class="feature-icon">✉️</span><div class="feature-name">Demand Letter</div><div class="feature-desc">A professional, legally-worded letter to send before filing. Most defendants settle after receiving one.</div></div>
+      <div class="feature-card"><span class="feature-icon">📍</span><div class="feature-name">State-Specific Guidance</div><div class="feature-desc">Every state has different rules, limits, and courts. We know them all. You get guidance for your exact jurisdiction.</div></div>
+      <div class="feature-card"><span class="feature-icon">📁</span><div class="feature-name">Court Filing Guide</div><div class="feature-desc">Step-by-step instructions for your exact court — where to go, what forms to bring, what fees to expect.</div></div>
+      <div class="feature-card"><span class="feature-icon">🛡️</span><div class="feature-name">Plain Language Analysis</div><div class="feature-desc">No legalese. We explain your situation clearly so you understand your rights and what to expect.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="pricing-section">
+  <div class="pricing-inner">
+    <div class="section-header">
+      <div class="section-label" style="margin-bottom:12px">Pricing</div>
+      <h2 class="section-title">Simple. Fair. Transparent.</h2>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card"><div class="pricing-name">Free</div><div class="pricing-price">$0</div><div class="pricing-per">forever</div><div class="pricing-features"><span>Case strength score</span><span>Legal analysis</span><span>Evidence checklist</span></div></div>
+      <div class="pricing-card featured"><div class="featured-badge">Most Popular</div><div class="pricing-name">Basic</div><div class="pricing-price">$29</div><div class="pricing-per" style="color:rgba(250,247,242,.4)">per case</div><div class="pricing-features"><span>Everything in Free</span><span>Demand letter</span><span>Court filing guide</span></div></div>
+      <div class="pricing-card"><div class="pricing-name">Pro</div><div class="pricing-price">$79</div><div class="pricing-per">per case</div><div class="pricing-features"><span>Everything in Basic</span><span>Follow-up letter</span><span>AI chat support</span></div></div>
+    </div>
+    <div style="text-align:center;margin-top:48px"><button class="btn-gold" onclick="showApp()">Get started free →</button></div>
+  </div>
+</div>
+
+<div id="section-app">
+  <div class="app-container">
+    <div class="progress-bar">
+      <div class="prog-step active" id="step1"><div class="prog-num">1</div>Your case</div>
+      <div class="prog-line"></div>
+      <div class="prog-step" id="step2"><div class="prog-num">2</div>Analysis</div>
+      <div class="prog-line"></div>
+      <div class="prog-step" id="step3"><div class="prog-num">3</div>Documents</div>
+    </div>
+
+    <div id="page-intake">
+      <div class="form-card">
+        <div class="form-card-header">
+          <div class="form-card-title">Tell us about your case</div>
+          <div class="form-card-sub">The more detail you provide, the stronger your analysis.</div>
+        </div>
+        <div class="form-card-body">
+          <div class="form-row">
+            <div class="form-group"><label>Your state</label><select id="state"><option value="">Select state...</option><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option></select></div>
+            <div class="form-group"><label>Amount disputed ($)</label><input type="number" id="amount" placeholder="e.g. 1500" min="1" /></div>
+          </div>
+          <div class="form-group"><label>Who are you suing?</label><select id="defendant"><option value="">Select defendant type...</option><option>Landlord / property management</option><option>Contractor / handyman</option><option>Business / retailer</option><option>Individual / private person</option><option>Employer (unpaid wages)</option><option>Auto dealer / repair shop</option><option>Other</option></select></div>
+          <div class="form-group"><label>Describe what happened</label><textarea id="description" placeholder="Be specific — include dates, amounts owed, what was agreed to, and what went wrong..."></textarea></div>
+          <div class="form-group"><label>Evidence you have</label>
+            <div class="evidence-grid">
+              <label class="evidence-label"><input type="checkbox" id="ev1" /> Written contract / lease</label>
+              <label class="evidence-label"><input type="checkbox" id="ev2" /> Receipts / invoices</label>
+              <label class="evidence-label"><input type="checkbox" id="ev3" /> Text / email messages</label>
+              <label class="evidence-label"><input type="checkbox" id="ev4" /> Photos / videos</label>
+              <label class="evidence-label"><input type="checkbox" id="ev5" /> Witnesses</label>
+              <label class="evidence-label"><input type="checkbox" id="ev6" /> No evidence yet</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" onclick="runAnalysis()">Analyze my case →</button>
+        <button class="btn-secondary" onclick="showHero()">← Back</button>
+      </div>
+      <div class="disclaimer" style="border-radius:var(--r-lg);margin-top:16px">ClaimAI is a document preparation service, not a law firm. Nothing here is legal advice. Consult a licensed attorney for advice specific to your situation.</div>
+    </div>
+
+    <div id="page-analysis" class="hidden">
+      <div id="loading-analysis" class="result-card"><div class="loading-state"><div class="loading-seal"></div><div class="loading-title">Reviewing your case...</div><div class="loading-sub">Analyzing jurisdiction, evidence strength, and legal precedent</div></div></div>
+      <div id="analysis-content" class="hidden">
+        <div class="result-card">
+          <div class="strength-hero">
+            <div class="strength-big" id="score-num">–</div>
+            <div style="flex:1">
+              <div class="strength-verdict" id="score-label">–</div>
+              <div class="strength-sub">Case strength score out of 100</div>
+              <div class="strength-track"><div class="strength-fill" id="score-bar" style="width:0%"></div></div>
+            </div>
+          </div>
+          <div class="result-body-section"><div class="result-section-label">Legal Analysis</div><div class="result-text" id="analysis-text"></div></div>
+          <div class="result-body-section"><div class="result-section-label">Evidence Checklist</div><div class="result-text" id="evidence-text"></div></div>
+        </div>
+        <div class="form-actions" style="margin-bottom:16px">
+          <button class="btn-primary" onclick="runDocs()">Generate documents →</button>
+          <button class="btn-secondary" onclick="goIntake()">← Edit case</button>
+        </div>
+      </div>
+      <div id="analysis-error" class="hidden result-card" style="padding:40px;text-align:center">
+        <div style="font-size:32px;margin-bottom:16px">⚠️</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:8px">Something went wrong</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:24px" id="analysis-error-msg">Make sure your backend server is running.</div>
+        <button class="btn-secondary" onclick="goIntake()">← Go back</button>
+      </div>
+    </div>
+
+    <div id="page-docs" class="hidden">
+      <div id="loading-docs" class="result-card"><div class="loading-state"><div class="loading-seal"></div><div class="loading-title">Drafting your documents...</div><div class="loading-sub">Preparing demand letter and court filing guide</div></div></div>
+      <div id="docs-content" class="hidden">
+        <div class="result-card">
+          <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('demand',this)">Demand Letter</button>
+            <button class="tab-btn" onclick="switchTab('filing',this)">Filing Guide</button>
+          </div>
+          <div id="tab-demand" class="tab-content"><button class="copy-btn" onclick="copyEl('demand-text')">⎘ Copy</button><div class="result-section-label">Ready to send</div><div class="result-text" id="demand-text"></div></div>
+          <div id="tab-filing" class="tab-content hidden"><button class="copy-btn" onclick="copyEl('filing-text')">⎘ Copy</button><div class="result-section-label">Your state's process</div><div class="result-text" id="filing-text"></div></div>
+        </div>
+        <div class="form-actions" style="margin-bottom:16px">
+          <button class="btn-primary" onclick="startOver()">Start new case</button>
+          <button class="btn-secondary" onclick="goAnalysis()">← Back to analysis</button>
+        </div>
+      </div>
+      <div id="docs-error" class="hidden result-card" style="padding:40px;text-align:center">
+        <div style="font-size:32px;margin-bottom:16px">⚠️</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:24px">Document generation failed</div>
+        <button class="btn-secondary" onclick="goAnalysis()">← Go back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer><span>ClaimAI</span> · Document preparation service · Not legal advice · © 2026</footer>
+
+<script>
+const API_BASE='http://localhost:3001';
+let caseData={};
+function setStep(n){[1,2,3].forEach(i=>{const el=document.getElementById('step'+i);el.className='prog-step'+(i===n?' active':i<n?' done':'');el.querySelector('.prog-num').textContent=i<n?'✓':i})}
+function showPage(name){['intake','analysis','docs'].forEach(p=>document.getElementById('page-'+p).classList.add('hidden'));document.getElementById('page-'+name).classList.remove('hidden')}
+function showHero(){['section-hero','.features-section','.pricing-section'].forEach(s=>{const el=s.startsWith('.')?document.querySelector(s):document.getElementById(s);if(el)el.style.display=''});document.getElementById('section-app').classList.remove('visible');window.scrollTo({top:0,behavior:'smooth'})}
+function showApp(){[document.getElementById('section-hero'),document.querySelector('.features-section'),document.querySelector('.pricing-section')].forEach(el=>{if(el)el.style.display='none'});document.getElementById('section-app').classList.add('visible');setStep(1);showPage('intake');window.scrollTo({top:0,behavior:'smooth'})}
+function goIntake(){setStep(1);showPage('intake')}
+function goAnalysis(){setStep(2);showPage('analysis')}
+function startOver(){showApp()}
+function getEvidence(){const ev=[];if(document.getElementById('ev1').checked)ev.push('written contract/lease');if(document.getElementById('ev2').checked)ev.push('receipts/invoices');if(document.getElementById('ev3').checked)ev.push('text/email messages');if(document.getElementById('ev4').checked)ev.push('photos/videos');if(document.getElementById('ev5').checked)ev.push('witnesses');if(document.getElementById('ev6').checked)ev.push('no evidence yet');return ev}
+async function runAnalysis(){
+  const state=document.getElementById('state').value,amount=document.getElementById('amount').value,defendant=document.getElementById('defendant').value,description=document.getElementById('description').value.trim();
+  if(!state||!amount||!defendant||!description){alert('Please fill in all fields.');return}
+  caseData={state,amount,defendant,evidence:getEvidence(),description};
+  setStep(2);showPage('analysis');
+  document.getElementById('loading-analysis').classList.remove('hidden');
+  document.getElementById('analysis-content').classList.add('hidden');
+  document.getElementById('analysis-error').classList.add('hidden');
+  try{
+    const res=await fetch(`${API_BASE}/api/analyze`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(caseData)});
+    if(!res.ok)throw new Error('Server error '+res.status);
+    const data=await res.json();
+    const color=data.score>=70?'#C9A84C':data.score>=40?'#E8A838':'#E05252';
+    document.getElementById('score-num').textContent=data.score;
+    document.getElementById('score-label').textContent=data.label;
+    document.getElementById('score-bar').style.cssText=`width:${data.score}%;background:${color}`;
+    document.getElementById('analysis-text').textContent=data.analysis;
+    document.getElementById('evidence-text').textContent=data.evidenceList;
+    document.getElementById('loading-analysis').classList.add('hidden');
+    document.getElementById('analysis-content').classList.remove('hidden');
+  }catch(e){document.getElementById('loading-analysis').classList.add('hidden');document.getElementById('analysis-error-msg').textContent=e.message;document.getElementById('analysis-error').classList.remove('hidden')}
+}
+async function runDocs(){
+  setStep(3);showPage('docs');
+  document.getElementById('loading-docs').classList.remove('hidden');
+  document.getElementById('docs-content').classList.add('hidden');
+  document.getElementById('docs-error').classList.add('hidden');
+  try{
+    const res=await fetch(`${API_BASE}/api/documents`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(caseData)});
+    if(!res.ok)throw new Error('Server error');
+    const data=await res.json();
+    document.getElementById('demand-text').textContent=data.demandLetter;
+    document.getElementById('filing-text').textContent=data.filingGuide;
+    document.getElementById('loading-docs').classList.add('hidden');
+    document.getElementById('docs-content').classList.remove('hidden');
+  }catch(e){document.getElementById('loading-docs').classList.add('hidden');document.getElementById('docs-error').classList.remove('hidden')}
+}
+function switchTab(tab,btn){document.getElementById('tab-demand').classList.add('hidden');document.getElementById('tab-filing').classList.add('hidden');document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+tab).classList.remove('hidden');btn.classList.add('active')}
+function copyEl(id){navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{document.querySelectorAll('.copy-btn').forEach(b=>{b.textContent='✓ Copied!';setTimeout(()=>b.textContent='⎘ Copy',2000)})})}
+</script>
+</body>
+</html>
