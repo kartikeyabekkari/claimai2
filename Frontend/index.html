@@ -290,7 +290,7 @@
 <footer><span>ClaimAI</span> · Document preparation service · Not legal advice · © 2026</footer>
 
 <script>
-const API_BASE='claimai2-production.up.railway.app';
+const API_BASE='https://claimai2-production.up.railway.app';
 let caseData={};
 function setStep(n){[1,2,3].forEach(i=>{const el=document.getElementById('step'+i);el.className='prog-step'+(i===n?' active':i<n?' done':'');el.querySelector('.prog-num').textContent=i<n?'✓':i})}
 function showPage(name){['intake','analysis','docs'].forEach(p=>document.getElementById('page-'+p).classList.add('hidden'));document.getElementById('page-'+name).classList.remove('hidden')}
