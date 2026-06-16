@@ -86,6 +86,16 @@
     .evidence-label{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink);cursor:pointer;padding:10px 14px;border:1px solid var(--border);border-radius:var(--r);background:var(--parchment);transition:all .15s}
     .evidence-label:hover{border-color:var(--border-dark);background:var(--cream)}
     .evidence-label input{accent-color:var(--ink)}
+    .upload-area{width:100%;padding:20px;border:1.5px dashed var(--border);border-radius:var(--r);background:var(--parchment);cursor:pointer;transition:all .2s;text-align:center;margin-top:6px}
+    .upload-area:hover{border-color:var(--border-dark);background:var(--cream)}
+    .upload-area input[type=file]{display:none}
+    .upload-icon{font-size:24px;margin-bottom:8px}
+    .upload-text{font-size:13px;color:var(--muted);line-height:1.5}
+    .upload-text strong{color:var(--ink);font-weight:500}
+    .image-previews{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+    .image-preview{position:relative;aspect-ratio:1;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+    .image-preview img{width:100%;height:100%;object-fit:cover}
+    .image-preview-remove{position:absolute;top:4px;right:4px;width:20px;height:20px;background:rgba(13,12,10,.7);color:#fff;border:none;border-radius:50%;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
     .btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--gold-light);border:none;border-radius:var(--r);padding:14px 32px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.03em;transition:all .2s}
     .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(13,12,10,.2)}
     .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:var(--r);padding:14px 24px;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s}
@@ -93,11 +103,9 @@
     .form-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
     .result-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 4px 24px rgba(13,12,10,.06);margin-bottom:20px}
     .strength-hero{background:var(--ink);padding:36px 40px;display:flex;align-items:center;gap:32px}
-    .strength-big{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:700;line-height:1;color:var(--gold)}
-    .strength-verdict{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:#FAF7F2;margin-bottom:8px}
+    .strength-verdict{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#FAF7F2;margin-bottom:8px}
     .strength-sub{font-size:13px;color:rgba(250,247,242,.5)}
-    .strength-track{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-top:16px}
-    .strength-fill{height:100%;border-radius:2px;transition:width 1s cubic-bezier(.4,0,.2,1)}
+    .strength-icon{font-size:56px;line-height:1}
     .result-body-section{padding:32px 40px;border-top:1px solid var(--border)}
     .result-section-label{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
     .result-text{font-size:14px;line-height:1.85;color:var(--ink);white-space:pre-wrap}
@@ -135,6 +143,7 @@
       .tabs-header{padding:0 20px}
       #section-app{padding:90px 16px 40px}
       .form-card-body{padding:20px}
+      .image-previews{grid-template-columns:repeat(3,1fr)}
     }
   </style>
 </head>
@@ -167,12 +176,12 @@
     <div class="section-label">What you get</div>
     <h2 class="features-title">Everything you need<br/>to walk into court ready.</h2>
     <div class="features-grid">
-      <div class="feature-card"><span class="feature-icon">⚡</span><div class="feature-name">Case Strength Score</div><div class="feature-desc">Know exactly where you stand before spending a dollar. AI rates your case 1–100 with a full legal breakdown.</div></div>
+      <div class="feature-card"><span class="feature-icon">⚡</span><div class="feature-name">Case Strength Rating</div><div class="feature-desc">Know exactly where you stand before spending a dollar. AI rates your case Strong, Moderate, or Weak with a full legal breakdown.</div></div>
       <div class="feature-card"><span class="feature-icon">📋</span><div class="feature-name">Evidence Checklist</div><div class="feature-desc">A custom list of what you have and what you still need — tailored to your specific case and state.</div></div>
-      <div class="feature-card"><span class="feature-icon">✉️</span><div class="feature-name">Demand Letter</div><div class="feature-desc">A professional, legally-worded letter to send before filing. Most defendants settle after receiving one.</div></div>
-      <div class="feature-card"><span class="feature-icon">📍</span><div class="feature-name">State-Specific Guidance</div><div class="feature-desc">Every state has different rules, limits, and courts. We know them all. You get guidance for your exact jurisdiction.</div></div>
+      <div class="feature-card"><span class="feature-icon">✉️</span><div class="feature-name">Demand Letter</div><div class="feature-desc">A professional, legally-worded letter using the specific facts of your case. Most defendants settle after receiving one.</div></div>
+      <div class="feature-card"><span class="feature-icon">🖼️</span><div class="feature-name">Evidence Photo Analysis</div><div class="feature-desc">Upload photos of contracts, damage, or messages. AI analyzes them and references specific details in your documents.</div></div>
       <div class="feature-card"><span class="feature-icon">📁</span><div class="feature-name">Court Filing Guide</div><div class="feature-desc">Step-by-step instructions for your exact court — where to go, what forms to bring, what fees to expect.</div></div>
-      <div class="feature-card"><span class="feature-icon">🛡️</span><div class="feature-name">Plain Language Analysis</div><div class="feature-desc">No legalese. We explain your situation clearly so you understand your rights and what to expect.</div></div>
+      <div class="feature-card"><span class="feature-icon">🛡️</span><div class="feature-name">State-Specific Guidance</div><div class="feature-desc">Every state has different rules, limits, and courts. You get guidance tailored to your exact jurisdiction.</div></div>
     </div>
   </div>
 </div>
@@ -184,9 +193,9 @@
       <h2 class="section-title">Simple. Fair. Transparent.</h2>
     </div>
     <div class="pricing-grid">
-      <div class="pricing-card"><div class="pricing-name">Free</div><div class="pricing-price">$0</div><div class="pricing-per">forever</div><div class="pricing-features"><span>Case strength score</span><span>Legal analysis</span><span>Evidence checklist</span></div></div>
+      <div class="pricing-card"><div class="pricing-name">Free</div><div class="pricing-price">$0</div><div class="pricing-per">forever</div><div class="pricing-features"><span>Case strength rating</span><span>Legal analysis</span><span>Evidence checklist</span></div></div>
       <div class="pricing-card featured"><div class="featured-badge">Most Popular</div><div class="pricing-name">Basic</div><div class="pricing-price">$29</div><div class="pricing-per" style="color:rgba(250,247,242,.4)">per case</div><div class="pricing-features"><span>Everything in Free</span><span>Demand letter</span><span>Court filing guide</span></div></div>
-      <div class="pricing-card"><div class="pricing-name">Pro</div><div class="pricing-price">$79</div><div class="pricing-per">per case</div><div class="pricing-features"><span>Everything in Basic</span><span>Follow-up letter</span><span>AI chat support</span></div></div>
+      <div class="pricing-card"><div class="pricing-name">Pro</div><div class="pricing-price">$79</div><div class="pricing-per">per case</div><div class="pricing-features"><span>Everything in Basic</span><span>Photo evidence analysis</span><span>AI chat support</span></div></div>
     </div>
     <div style="text-align:center;margin-top:48px"><button class="btn-gold" onclick="showApp()">Get started free →</button></div>
   </div>
@@ -214,7 +223,7 @@
             <div class="form-group"><label>Amount disputed ($)</label><input type="number" id="amount" placeholder="e.g. 1500" min="1" /></div>
           </div>
           <div class="form-group"><label>Who are you suing?</label><select id="defendant"><option value="">Select defendant type...</option><option>Landlord / property management</option><option>Contractor / handyman</option><option>Business / retailer</option><option>Individual / private person</option><option>Employer (unpaid wages)</option><option>Auto dealer / repair shop</option><option>Other</option></select></div>
-          <div class="form-group"><label>Describe what happened</label><textarea id="description" placeholder="Be specific — include dates, amounts owed, what was agreed to, and what went wrong..."></textarea></div>
+          <div class="form-group"><label>Describe what happened</label><textarea id="description" placeholder="Be specific — include dates, amounts owed, what was agreed to, and what went wrong. The more detail, the better your documents."></textarea></div>
           <div class="form-group"><label>Evidence you have</label>
             <div class="evidence-grid">
               <label class="evidence-label"><input type="checkbox" id="ev1" /> Written contract / lease</label>
@@ -224,6 +233,15 @@
               <label class="evidence-label"><input type="checkbox" id="ev5" /> Witnesses</label>
               <label class="evidence-label"><input type="checkbox" id="ev6" /> No evidence yet</label>
             </div>
+          </div>
+          <div class="form-group">
+            <label>Upload evidence photos (optional)</label>
+            <div class="upload-area" onclick="document.getElementById('evidence-images').click()">
+              <input type="file" id="evidence-images" multiple accept="image/*" onchange="handleImageUpload(event)" />
+              <div class="upload-icon">🖼️</div>
+              <div class="upload-text"><strong>Click to upload photos</strong><br/>Contracts, damage, receipts, messages — max 10 images</div>
+            </div>
+            <div class="image-previews" id="image-previews"></div>
           </div>
         </div>
       </div>
@@ -239,11 +257,10 @@
       <div id="analysis-content" class="hidden">
         <div class="result-card">
           <div class="strength-hero">
-            <div class="strength-big" id="score-num">–</div>
+            <div class="strength-icon" id="strength-icon">⚖️</div>
             <div style="flex:1">
               <div class="strength-verdict" id="score-label">–</div>
-              <div class="strength-sub">Case strength score out of 100</div>
-              <div class="strength-track"><div class="strength-fill" id="score-bar" style="width:0%"></div></div>
+              <div class="strength-sub" id="strength-sub">Based on the facts you provided</div>
             </div>
           </div>
           <div class="result-body-section"><div class="result-section-label">Legal Analysis</div><div class="result-text" id="analysis-text"></div></div>
@@ -292,14 +309,55 @@
 <script>
 const API_BASE='https://claimai2-production.up.railway.app';
 let caseData={};
+let uploadedImages=[];
+
+// Image upload handling
+function handleImageUpload(e) {
+  const files = Array.from(e.target.files);
+  const remaining = 10 - uploadedImages.length;
+  const toAdd = files.slice(0, remaining);
+  toAdd.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      uploadedImages.push({ file, dataUrl: ev.target.result });
+      renderPreviews();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderPreviews() {
+  const container = document.getElementById('image-previews');
+  container.innerHTML = '';
+  uploadedImages.forEach((img, i) => {
+    const div = document.createElement('div');
+    div.className = 'image-preview';
+    div.innerHTML = `<img src="${img.dataUrl}" alt="Evidence ${i+1}" /><button class="image-preview-remove" onclick="removeImage(${i})">×</button>`;
+    container.appendChild(div);
+  });
+}
+
+function removeImage(i) {
+  uploadedImages.splice(i, 1);
+  renderPreviews();
+}
+
 function setStep(n){[1,2,3].forEach(i=>{const el=document.getElementById('step'+i);el.className='prog-step'+(i===n?' active':i<n?' done':'');el.querySelector('.prog-num').textContent=i<n?'✓':i})}
 function showPage(name){['intake','analysis','docs'].forEach(p=>document.getElementById('page-'+p).classList.add('hidden'));document.getElementById('page-'+name).classList.remove('hidden')}
 function showHero(){['section-hero','.features-section','.pricing-section'].forEach(s=>{const el=s.startsWith('.')?document.querySelector(s):document.getElementById(s);if(el)el.style.display=''});document.getElementById('section-app').classList.remove('visible');window.scrollTo({top:0,behavior:'smooth'})}
 function showApp(){[document.getElementById('section-hero'),document.querySelector('.features-section'),document.querySelector('.pricing-section')].forEach(el=>{if(el)el.style.display='none'});document.getElementById('section-app').classList.add('visible');setStep(1);showPage('intake');window.scrollTo({top:0,behavior:'smooth'})}
 function goIntake(){setStep(1);showPage('intake')}
 function goAnalysis(){setStep(2);showPage('analysis')}
-function startOver(){showApp()}
+function startOver(){uploadedImages=[];renderPreviews();showApp()}
 function getEvidence(){const ev=[];if(document.getElementById('ev1').checked)ev.push('written contract/lease');if(document.getElementById('ev2').checked)ev.push('receipts/invoices');if(document.getElementById('ev3').checked)ev.push('text/email messages');if(document.getElementById('ev4').checked)ev.push('photos/videos');if(document.getElementById('ev5').checked)ev.push('witnesses');if(document.getElementById('ev6').checked)ev.push('no evidence yet');return ev}
+
+function getStrengthDisplay(label) {
+  const l = label.toLowerCase();
+  if (l.includes('strong')) return { icon: '💪', color: '#2D6A4F', sub: 'You appear to have a solid case based on the facts provided' };
+  if (l.includes('weak')) return { icon: '⚠️', color: '#8B1A1A', sub: 'The facts described may present some challenges in court' };
+  return { icon: '⚖️', color: '#7D4E1A', sub: 'Your case has merit but some factors could go either way' };
+}
+
 async function runAnalysis(){
   const state=document.getElementById('state').value,amount=document.getElementById('amount').value,defendant=document.getElementById('defendant').value,description=document.getElementById('description').value.trim();
   if(!state||!amount||!defendant||!description){alert('Please fill in all fields.');return}
@@ -309,26 +367,45 @@ async function runAnalysis(){
   document.getElementById('analysis-content').classList.add('hidden');
   document.getElementById('analysis-error').classList.add('hidden');
   try{
-    const res=await fetch(`${API_BASE}/api/analyze`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(caseData)});
+    const formData = new FormData();
+    formData.append('state', state);
+    formData.append('amount', amount);
+    formData.append('defendant', defendant);
+    formData.append('description', description);
+    getEvidence().forEach(e => formData.append('evidence', e));
+    uploadedImages.forEach(img => formData.append('images', img.file));
+
+    const res=await fetch(`${API_BASE}/api/analyze`,{method:'POST',body:formData});
     if(!res.ok)throw new Error('Server error '+res.status);
     const data=await res.json();
-    const color=data.score>=70?'#C9A84C':data.score>=40?'#E8A838':'#E05252';
-    document.getElementById('score-num').textContent=data.score;
-    document.getElementById('score-label').textContent=data.label;
-    document.getElementById('score-bar').style.cssText=`width:${data.score}%;background:${color}`;
+
+    const display = getStrengthDisplay(data.label);
+    document.getElementById('strength-icon').textContent = display.icon;
+    document.getElementById('score-label').textContent = data.label;
+    document.getElementById('score-label').style.color = '#FAF7F2';
+    document.getElementById('strength-sub').textContent = display.sub;
+
     document.getElementById('analysis-text').textContent=data.analysis;
     document.getElementById('evidence-text').textContent=data.evidenceList;
     document.getElementById('loading-analysis').classList.add('hidden');
     document.getElementById('analysis-content').classList.remove('hidden');
   }catch(e){document.getElementById('loading-analysis').classList.add('hidden');document.getElementById('analysis-error-msg').textContent=e.message;document.getElementById('analysis-error').classList.remove('hidden')}
 }
+
 async function runDocs(){
   setStep(3);showPage('docs');
   document.getElementById('loading-docs').classList.remove('hidden');
   document.getElementById('docs-content').classList.add('hidden');
   document.getElementById('docs-error').classList.add('hidden');
   try{
-    const res=await fetch(`${API_BASE}/api/documents`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(caseData)});
+    const formData = new FormData();
+    formData.append('state', caseData.state);
+    formData.append('amount', caseData.amount);
+    formData.append('defendant', caseData.defendant);
+    formData.append('description', caseData.description);
+    uploadedImages.forEach(img => formData.append('images', img.file));
+
+    const res=await fetch(`${API_BASE}/api/documents`,{method:'POST',body:formData});
     if(!res.ok)throw new Error('Server error');
     const data=await res.json();
     document.getElementById('demand-text').textContent=data.demandLetter;
@@ -337,6 +414,7 @@ async function runDocs(){
     document.getElementById('docs-content').classList.remove('hidden');
   }catch(e){document.getElementById('loading-docs').classList.add('hidden');document.getElementById('docs-error').classList.remove('hidden')}
 }
+
 function switchTab(tab,btn){document.getElementById('tab-demand').classList.add('hidden');document.getElementById('tab-filing').classList.add('hidden');document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+tab).classList.remove('hidden');btn.classList.add('active')}
 function copyEl(id){navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{document.querySelectorAll('.copy-btn').forEach(b=>{b.textContent='✓ Copied!';setTimeout(()=>b.textContent='⎘ Copy',2000)})})}
 </script>
